@@ -16,12 +16,12 @@ var map_points : Array = []  # 存储地图检查点
 func _ready():
 	# 检查节点名称是否符合克隆体的特征
 	if not name.begins_with("Enemy_"):
-		print("Not a clone, script will not execute.")
+		#print("Not a clone, script will not execute.")
 		return
 	data = Globals.data
 	connect("start_1", Callable(self, "_on_start_1"))
 	scale = Vector2(6, 6)
-	print("Enemy ready: ", self.name)
+	#print("Enemy ready: ", self.name)
 
 func _on_start_1():
 	#print("Signal received: start_1 for ", self.name)
@@ -56,9 +56,9 @@ func _process(delta: float) -> void:
 			if current_checkpoint < map_points.size():
 				target_position = map_points[current_checkpoint]
 				moving = true
-				print(self.name, " moving to next checkpoint: ", target_position)
+				#print(self.name, " moving to next checkpoint: ", target_position)
 			else:
-				print(self.name, " has reached all checkpoints.")
+				#print(self.name, " has reached all checkpoints.")
 				# 设置自身为不可见并发射 attack 信号
 				visible = false
 				emit_signal("attack")

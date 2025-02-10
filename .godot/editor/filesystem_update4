@@ -1,2 +1,5 @@
+res://Entrance.tscn
 res://globals.gd
 res://Themes/Theme.tres
+res://Menu/Menu.tscn
+res://Game/Game.tscn
