@@ -1,0 +1,29 @@
+[gd_resource type="Theme" load_steps=5 format=3 uid="uid://be6u67ywwprkg"]
+
+[ext_resource type="FontFile" uid="uid://dir7wn3vfk883" path="res://Fonts/ark-pixel-12px-proportional-zh_cn.otf" id="1_wymli"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kgcmf"]
+bg_color = Color(0.376471, 0.376471, 0.376471, 0.47451)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f0htq"]
+bg_color = Color(0.364706, 0.364706, 0.364706, 0.305882)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_brs0b"]
+bg_color = Color(0.313726, 0.313726, 0.313726, 0.647059)
+
+[resource]
+default_font = ExtResource("1_wymli")
+default_font_size = 30
+Button/colors/font_color = Color(0, 0, 0, 1)
+Button/colors/font_disabled_color = Color(0.611765, 0.611765, 0.611765, 1)
+Button/colors/font_focus_color = Color(0, 0, 0, 1)
+Button/colors/font_hover_color = Color(0.347817, 0.347817, 0.347817, 1)
+Button/colors/font_hover_pressed_color = Color(0.577008, 0.577008, 0.577008, 1)
+Button/colors/font_outline_color = Color(0, 0, 0, 0)
+Button/colors/font_pressed_color = Color(0.576471, 0.576471, 0.576471, 1)
+Button/font_sizes/font_size = 40
+Button/fonts/font = ExtResource("1_wymli")
+Button/styles/hover = SubResource("StyleBoxFlat_kgcmf")
+Button/styles/normal = SubResource("StyleBoxFlat_f0htq")
+Button/styles/pressed = SubResource("StyleBoxFlat_brs0b")
+Label/colors/font_color = Color(0, 0, 0, 1)

@@ -1,0 +1,34 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="虚空防线VoidDefense"
+run/main_scene="res://Entrance.tscn"
+config/features=PackedStringArray("4.3", "Mobile")
+boot_splash/image="res://Pic/Background.png"
+config/icon="res://empty.svg"
+
+[autoload]
+
+Globals="*res://globals.gd"
+Autobgm="*res://Music/autobgm.gd"
+
+[display]
+
+window/size/viewport_width=1440
+window/size/viewport_height=810
+window/stretch/mode="viewport"
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0
+renderer/rendering_method="mobile"
+textures/vram_compression/import_etc2_astc=true

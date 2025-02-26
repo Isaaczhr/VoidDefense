@@ -1,0 +1,120 @@
+[gd_scene load_steps=17 format=3 uid="uid://drb0vxqob01hv"]
+
+[ext_resource type="Script" path="res://Game/game.gd" id="1_ickso"]
+[ext_resource type="Texture2D" uid="uid://bh70xl8rokwoi" path="res://Menu/MenuBKG.png" id="2_0aijh"]
+[ext_resource type="Script" path="res://Game/gamemain.gd" id="2_sq75a"]
+[ext_resource type="Script" path="res://Game/original_road.gd" id="2_xux5s"]
+[ext_resource type="Script" path="res://Game/enemy_1.gd" id="4_3ferb"]
+[ext_resource type="Texture2D" uid="uid://bh56dhst1y0j4" path="res://Pic/box.png" id="4_3rsil"]
+[ext_resource type="Script" path="res://Game/label.gd" id="6_cl5ml"]
+[ext_resource type="Script" path="res://Game/backtomenu.gd" id="7_h3yl6"]
+[ext_resource type="Theme" uid="uid://be6u67ywwprkg" path="res://Themes/Theme.tres" id="7_xsrla"]
+[ext_resource type="Texture2D" uid="uid://b61mxsiotvu1y" path="res://Pic/enemy/enemy_1.png" id="8_cqiar"]
+[ext_resource type="Script" path="res://Game/lose.gd" id="10_3p3d2"]
+[ext_resource type="Texture2D" uid="uid://bhhp521vr3om4" path="res://Pic/enemy/enemy_2.png" id="10_twucv"]
+[ext_resource type="Texture2D" uid="uid://dgxotcac4cps5" path="res://Pic/tower/tower_1.png" id="11_yckl0"]
+[ext_resource type="Script" path="res://Game/youlose.gd" id="12_bne5v"]
+[ext_resource type="Script" path="res://Game/originaltower.gd" id="12_k5rm2"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_btat0"]
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_ickso")
+
+[node name="MainGameScene" type="Node2D" parent="."]
+script = ExtResource("2_sq75a")
+
+[node name="Elements" type="Node2D" parent="MainGameScene"]
+
+[node name="MenuBkg" type="Sprite2D" parent="MainGameScene/Elements"]
+position = Vector2(720, 405)
+scale = Vector2(0.762, 0.762)
+texture = ExtResource("2_0aijh")
+
+[node name="GamingPkg" type="Sprite2D" parent="MainGameScene/Elements"]
+
+[node name="Sprite2D" type="Sprite2D" parent="MainGameScene/Elements"]
+position = Vector2(542, 79.55)
+scale = Vector2(5.1, 5.86818)
+texture = ExtResource("4_3rsil")
+
+[node name="Label" type="Label" parent="MainGameScene/Elements"]
+offset_left = 1050.0
+offset_top = 7.0
+offset_right = 1205.0
+offset_bottom = 113.0
+theme = ExtResource("7_xsrla")
+theme_override_font_sizes/font_size = 70
+text = "HP:3"
+script = ExtResource("6_cl5ml")
+
+[node name="Back" type="Button" parent="MainGameScene/Elements"]
+offset_left = 1191.0
+offset_top = 21.0
+offset_right = 1425.0
+offset_bottom = 102.0
+theme = ExtResource("7_xsrla")
+theme_override_font_sizes/font_size = 18
+text = "Back
+返回
+（怕你看不懂英文）（滑稽）"
+script = ExtResource("7_h3yl6")
+
+[node name="OriginalRoad" type="Sprite2D" parent="MainGameScene"]
+visible = false
+position = Vector2(-184, 272)
+scale = Vector2(0.5, 0.5)
+texture = SubResource("CompressedTexture2D_btat0")
+script = ExtResource("2_xux5s")
+
+[node name="enemy_1" type="Sprite2D" parent="MainGameScene"]
+visible = false
+z_index = 10
+position = Vector2(-194, 470)
+texture = ExtResource("8_cqiar")
+script = ExtResource("4_3ferb")
+
+[node name="enemy_2" type="Sprite2D" parent="MainGameScene"]
+visible = false
+z_index = 10
+position = Vector2(-160, 695)
+texture = ExtResource("10_twucv")
+script = ExtResource("4_3ferb")
+
+[node name="Towers" type="Node2D" parent="MainGameScene"]
+
+[node name="Original" type="Sprite2D" parent="MainGameScene/Towers"]
+position = Vector2(120, 80)
+scale = Vector2(6, 6)
+texture = ExtResource("11_yckl0")
+script = ExtResource("12_k5rm2")
+
+[node name="Lose" type="Node2D" parent="."]
+visible = false
+script = ExtResource("10_3p3d2")
+
+[node name="MenuBkg" type="Sprite2D" parent="Lose"]
+position = Vector2(720, 405)
+scale = Vector2(0.762, 0.762)
+texture = ExtResource("2_0aijh")
+
+[node name="Button" type="Button" parent="Lose"]
+offset_left = 600.0
+offset_top = 400.0
+offset_right = 840.0
+offset_bottom = 490.0
+theme = ExtResource("7_xsrla")
+theme_override_font_sizes/font_size = 60
+text = "返回菜单"
+flat = true
+script = ExtResource("7_h3yl6")
+
+[node name="youlose" type="Label" parent="Lose"]
+offset_left = 420.0
+offset_top = 150.0
+offset_right = 1020.0
+offset_bottom = 375.0
+theme = ExtResource("7_xsrla")
+theme_override_font_sizes/font_size = 150
+text = "你输了！"
+script = ExtResource("12_bne5v")

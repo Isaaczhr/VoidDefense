@@ -1,0 +1,59 @@
+[gd_scene load_steps=7 format=3 uid="uid://bfehmbgx8q8bd"]
+
+[ext_resource type="Script" path="res://start.gd" id="1_oswat"]
+[ext_resource type="Texture2D" uid="uid://bgm2b32y5yjdh" path="res://Pic/BackGround.png" id="2_g7ssy"]
+[ext_resource type="Theme" uid="uid://be6u67ywwprkg" path="res://Themes/Theme.tres" id="3_gyoyc"]
+[ext_resource type="Script" path="res://button.gd" id="4_cjrhd"]
+[ext_resource type="FontFile" uid="uid://dir7wn3vfk883" path="res://Fonts/ark-pixel-12px-proportional-zh_cn.otf" id="5_hrigj"]
+[ext_resource type="FontFile" uid="uid://frv7iy537npn" path="res://Fonts/MiSans-Normal.otf" id="6_rryqv"]
+
+[node name="Entrance" type="Node2D"]
+
+[node name="Start" type="Node2D" parent="."]
+script = ExtResource("1_oswat")
+
+[node name="Background" type="Sprite2D" parent="Start"]
+position = Vector2(720, 405)
+scale = Vector2(0.762, 0.762)
+texture = ExtResource("2_g7ssy")
+
+[node name="Button" type="Button" parent="Start"]
+offset_left = 566.0
+offset_top = 350.0
+offset_right = 874.0
+offset_bottom = 509.0
+theme = ExtResource("3_gyoyc")
+theme_override_font_sizes/font_size = 100
+text = "启动！"
+flat = true
+script = ExtResource("4_cjrhd")
+
+[node name="Label" type="Label" parent="Start"]
+offset_left = 82.0
+offset_top = 526.0
+offset_right = 1372.0
+offset_bottom = 763.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("5_hrigj")
+theme_override_font_sizes/font_size = 30
+text = "更改了字体为免费商用开源字体“方舟像素”
+另外内容很简陋看了你就知道了但是这真的是我做了十几hours做出来的呜呜呜我还是太菜了
+（为了让项目看起来很充实我要多写点字上去别骂了别骂了其实你们的项目进展也不大对吧对吧）
+项目重命名为“虚空防线VoidDefense”！！！"
+
+[node name="Label2" type="Label" parent="Start"]
+offset_left = 1009.0
+offset_top = 684.0
+offset_right = 1426.0
+offset_bottom = 801.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_rryqv")
+theme_override_font_sizes/font_size = 20
+text = "Made with Godot Engine 4.3
+Latest Version Made At 2024/12/13 23:03
+Members: Ziqin Xu, Yutian Tang, Haoran Zhou
+(为什么要写英文呢因为英文看起来比较装逼)"
+
+[node name="Label3" type="Label" parent="Start"]
+offset_right = 40.0
+offset_bottom = 23.0

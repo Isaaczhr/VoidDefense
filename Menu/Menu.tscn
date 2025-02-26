@@ -1,0 +1,52 @@
+[gd_scene load_steps=7 format=3 uid="uid://ja8k4rkyp3ot"]
+
+[ext_resource type="Texture2D" uid="uid://bh70xl8rokwoi" path="res://Menu/MenuBKG.png" id="1_gxnlw"]
+[ext_resource type="Script" path="res://Menu/menu.gd" id="1_tjgua"]
+[ext_resource type="Script" path="res://Menu/Menubutton.gd" id="2_14t4r"]
+[ext_resource type="FontFile" uid="uid://dir7wn3vfk883" path="res://Fonts/ark-pixel-12px-proportional-zh_cn.otf" id="2_j4agr"]
+[ext_resource type="Theme" uid="uid://be6u67ywwprkg" path="res://Themes/Theme.tres" id="2_poxwt"]
+[ext_resource type="Script" path="res://Menu/exitmenu.gd" id="3_r406u"]
+
+[node name="Menu" type="Node2D"]
+
+[node name="Menu" type="Node2D" parent="."]
+script = ExtResource("1_tjgua")
+
+[node name="MenuBkg" type="Sprite2D" parent="Menu"]
+position = Vector2(720, 405)
+scale = Vector2(0.762, 0.762)
+texture = ExtResource("1_gxnlw")
+
+[node name="Button1" type="Button" parent="Menu"]
+z_index = 1
+offset_left = 114.0
+offset_top = 107.0
+offset_right = 1322.0
+offset_bottom = 438.0
+theme = ExtResource("2_poxwt")
+theme_override_font_sizes/font_size = 80
+text = "游戏1
+（没错现在只有1）
+（点吧点吧这么大就是让你点的）"
+script = ExtResource("2_14t4r")
+
+[node name="ExitButton" type="Button" parent="Menu"]
+offset_left = 1216.0
+offset_top = 646.0
+offset_right = 1416.0
+offset_bottom = 788.0
+theme = ExtResource("2_poxwt")
+theme_override_font_sizes/font_size = 89
+text = "Exit"
+flat = true
+script = ExtResource("3_r406u")
+
+[node name="Label" type="Label" parent="Menu"]
+offset_left = 24.0
+offset_top = 28.0
+offset_right = 374.0
+offset_bottom = 97.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_j4agr")
+theme_override_font_sizes/font_size = 50
+text = "（极简的）菜单"
