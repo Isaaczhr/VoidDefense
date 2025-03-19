@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://dwwk6low5taqm"]
+
+[ext_resource type="Script" uid="uid://dpthm5l6csvmy" path="res://source/actor/bullet.gd" id="1_sqeb7"]
+[ext_resource type="Texture2D" uid="uid://dac2ytuxwhqhj" path="res://assets/textures/tilesheet.png" id="2_7ikpi"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7th7d"]
+atlas = ExtResource("2_7ikpi")
+region = Rect2(256, 512, 16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7ikpi"]
+size = Vector2(2, 2)
+
+[node name="Bullet" type="Node2D"]
+script = ExtResource("1_sqeb7")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = -1.5708
+texture = SubResource("AtlasTexture_7th7d")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_7ikpi")

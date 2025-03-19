@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://4l4dox7f087a"]
+
+[ext_resource type="Script" uid="uid://fgdu6fq2fori" path="res://source/actor/tower.gd" id="1_wq0lu"]
+[ext_resource type="SpriteFrames" uid="uid://781vjtvucxwr" path="res://assets/textures/tower/frames/tower_01_frames.tres" id="2_23b6p"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wq0lu"]
+radius = 48.0
+
+[node name="Tower" type="Node2D"]
+script = ExtResource("1_wq0lu")
+
+[node name="AnimatedSpriteTower" type="AnimatedSprite2D" parent="."]
+sprite_frames = ExtResource("2_23b6p")
+animation = &"standby"
+speed_scale = 2.0
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_wq0lu")
+
+[node name="AudioShoot" type="AudioStreamPlayer" parent="."]
