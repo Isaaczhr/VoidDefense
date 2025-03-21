@@ -37,6 +37,5 @@ value = 100.0
 show_percentage = false
 
 [node name="AudioDie" type="AudioStreamPlayer" parent="."]
-unique_name_in_owner = true
 stream = ExtResource("3_644rj")
-volume_db = -30.0
+volume_db = -15.0

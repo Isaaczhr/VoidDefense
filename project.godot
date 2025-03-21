@@ -21,6 +21,10 @@ window/size/viewport_width=1280
 window/size/viewport_height=720
 window/stretch/mode="canvas_items"
 
+[editor]
+
+movie_writer/movie_file="D:/Users/Isaac/Documents/Godot/VoidDefense/test_video.avi"
+
 [layer_names]
 
 2d_physics/layer_1="Tower"

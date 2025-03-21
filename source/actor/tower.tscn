@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://4l4dox7f087a"]
+[gd_scene load_steps=5 format=3 uid="uid://4l4dox7f087a"]
 
 [ext_resource type="Script" uid="uid://fgdu6fq2fori" path="res://source/actor/tower.gd" id="1_wq0lu"]
 [ext_resource type="SpriteFrames" uid="uid://781vjtvucxwr" path="res://assets/textures/tower/frames/tower_01_frames.tres" id="2_23b6p"]
+[ext_resource type="AudioStream" uid="uid://hx6iyej3i7vi" path="res://assets/sound/build.wav" id="3_23b6p"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_wq0lu"]
 radius = 48.0
@@ -21,3 +22,6 @@ collision_mask = 2
 shape = SubResource("CircleShape2D_wq0lu")
 
 [node name="AudioShoot" type="AudioStreamPlayer" parent="."]
+
+[node name="AudioBuild" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_23b6p")

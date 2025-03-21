@@ -1,0 +1,32 @@
+[gd_scene load_steps=4 format=3 uid="uid://btcnsahq08hvc"]
+
+[ext_resource type="PackedScene" uid="uid://4l4dox7f087a" path="res://source/actor/tower.tscn" id="1_0w7f1"]
+[ext_resource type="Script" uid="uid://d0yu6kapsu86n" path="res://source/interface/original_tower.gd" id="1_vm2ax"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_272bh"]
+
+[node name="OriginalTower" type="MarginContainer"]
+script = ExtResource("1_vm2ax")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_272bh")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+
+[node name="SubViewport" type="SubViewportContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="SubViewport" type="SubViewport" parent="MarginContainer/SubViewport"]
+handle_input_locally = false
+canvas_item_default_texture_filter = 0
+size = Vector2i(64, 64)
+render_target_update_mode = 4
+
+[node name="Node2D" type="Node2D" parent="MarginContainer/SubViewport/SubViewport"]
+position = Vector2(32, 32)
+scale = Vector2(4, 4)
+
+[node name="Tower" parent="MarginContainer/SubViewport/SubViewport/Node2D" instance=ExtResource("1_0w7f1")]

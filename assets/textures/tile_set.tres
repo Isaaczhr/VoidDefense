@@ -1,6 +1,7 @@
-[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://dx4lw550wy0b5"]
+[gd_resource type="TileSet" load_steps=5 format=3 uid="uid://dx4lw550wy0b5"]
 
 [ext_resource type="Texture2D" uid="uid://dac2ytuxwhqhj" path="res://assets/textures/tilesheet.png" id="1_k4420"]
+[ext_resource type="PackedScene" uid="uid://4l4dox7f087a" path="res://source/actor/tower.tscn" id="2_o4s0f"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_o4s0f"]
 texture = ExtResource("1_k4420")
@@ -63,6 +64,19 @@ texture = ExtResource("1_k4420")
 9:34/0 = 0
 10:34/0 = 0
 8:35/0 = 0
+7:34/0 = 0
+6:35/0 = 0
+7:35/0 = 0
+9:35/0 = 0
+9:36/0 = 0
+8:36/0 = 0
+7:36/0 = 0
+6:36/0 = 0
+
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_g170p"]
+resource_name = "Tower"
+scenes/1/scene = ExtResource("2_o4s0f")
 
 [resource]
 sources/0 = SubResource("TileSetAtlasSource_o4s0f")
+sources/1 = SubResource("TileSetScenesCollectionSource_g170p")

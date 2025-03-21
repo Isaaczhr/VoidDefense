@@ -1,0 +1,71 @@
+[gd_scene load_steps=4 format=3 uid="uid://b7cm7oj1gdxtt"]
+
+[ext_resource type="FontFile" uid="uid://bj4xew07yitlm" path="res://assets/fonts/ark-pixel-12px-proportional-zh_cn.otf" id="1_5eoun"]
+[ext_resource type="Script" uid="uid://cqdlmvnxe03mn" path="res://source/interface/game_form.gd" id="1_hcqer"]
+[ext_resource type="PackedScene" uid="uid://btcnsahq08hvc" path="res://source/interface/original_tower.tscn" id="3_qa7p6"]
+
+[node name="GameForm" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_hcqer")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_5eoun")
+theme_override_font_sizes/font_size = 40
+text = "💰9999999"
+
+[node name="ProgressBar" type="ProgressBar" parent="VBoxContainer/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(200, 40)
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("1_5eoun")
+show_percentage = false
+
+[node name="ExitButton" type="Button" parent="VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_5eoun")
+theme_override_font_sizes/font_size = 40
+text = "🚪"
+flat = true
+
+[node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 10
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/MarginContainer2"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+
+[node name="OriginalTower" parent="VBoxContainer/MarginContainer2/HBoxContainer" instance=ExtResource("3_qa7p6")]
+layout_mode = 2

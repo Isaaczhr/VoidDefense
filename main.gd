@@ -1,11 +1,24 @@
 extends Node2D
 
+const TILE_SOURCE_ID_PLACEABLE: int = 0
+const TILE_CELL_PLACEABLE: Vector2i = Vector2i(4, 34)
+
+@onready var music_bg: AudioStreamPlayer = $MusicBG
+@onready var map: TileMapLayer = $Map
 @onready var timer_spawn_enemy: Timer = $TimerSpawnEnemy
 @onready var timer_begin: Timer = $TimerBegin
 @onready var path_2d: Path2D = $Map/Path2D
+@onready var game_form: Control = $CanvasLayer/GameForm
 @export var enemies: Array[PackedScene]
 @export var enemy_count: int = 10
 @onready var rich_text_label: RichTextLabel = $RichTextLabel
+
+var _preview_tower: Tower:
+    set(value):
+        if _preview_tower and value:
+            _preview_tower.queue_free()
+            map.remove_child(_preview_tower)
+        _preview_tower = value
 
 var _countdown_count: int = 0
 
@@ -13,6 +26,12 @@ signal game_start
 
 func _ready() -> void:
     randomize()
+    game_form.tower_released.connect(
+        func(P_TOWER: PackedScene) -> void:
+            _preview_tower = P_TOWER.instantiate()
+            map.add_child(_preview_tower)
+            _preview_tower.modulate = Color(1, 1, 1, 0.5)
+    )
     connect("game_start", Callable(self,"start"))
     start_countdown()
 
@@ -45,7 +64,62 @@ func start() -> void:
         func()-> void:
             _spawn_enemy()
     )
+    music_bg.connect("finished", Callable(self, "_play_bgm"))
+    _play_bgm()
     _loop()
+
+func _process(delta: float) -> void:
+    preview_tower()
+
+func _unhandled_input(event: InputEvent) -> void:
+    if not _preview_tower: return
+    if event is InputEventMouseButton and event.pressed:
+        if event.button_index == MOUSE_BUTTON_LEFT:
+            place_tower()
+        if event.button_index == MOUSE_BUTTON_RIGHT:
+            cancel_preview()
+
+## 预览塔
+func preview_tower() -> void:
+    if not _preview_tower: return
+    var mouse_pos = get_global_mouse_position()
+    var cell = map.local_to_map(map.to_local(mouse_pos))
+    _preview_tower.global_position = map.to_global(map.map_to_local(cell))
+    if can_place_tower(cell):
+        _preview_tower.modulate = Color(1, 1, 1, 0.7)
+        _preview_tower.show_range(true)
+    else:
+        _preview_tower.modulate = Color(1, 0, 0, 0.3)
+        _preview_tower.show_range(false)
+
+## 取消预览
+func cancel_preview() -> void:
+    if not _preview_tower: return
+    _preview_tower.queue_free()
+    map.remove_child(_preview_tower)
+    _preview_tower = null
+
+## 在地图上放置塔
+func place_tower() -> void:
+    if not _preview_tower: return
+    var cell: Vector2i = map.local_to_map(map.to_local(_preview_tower.global_position))
+    if can_place_tower(cell):
+        _preview_tower.audio_build.play()
+        _preview_tower.initialize()
+        _preview_tower.modulate = Color(1, 1, 1, 1)
+        _preview_tower.show_range(false)
+        _preview_tower = null
+        map.set_cell(cell, 1)
+        # map.set_cell(cell, 1, Vector2i.ZERO, 1)
+    else:
+        cancel_preview()
+        
+
+## 能否放置塔
+func can_place_tower(cell: Vector2i) -> bool:
+    var tile_source_id: int = map.get_cell_source_id(cell)
+    var tile_cell: Vector2i = map.get_cell_atlas_coords(cell)
+    return tile_source_id == TILE_SOURCE_ID_PLACEABLE and tile_cell == TILE_CELL_PLACEABLE
 
 ## 生成敌人
 func _spawn_enemy() -> void:
@@ -59,3 +133,7 @@ func _spawn_enemy() -> void:
 func _loop() -> void:
     timer_spawn_enemy.wait_time = randf_range(3, 5)
     timer_spawn_enemy.start()
+
+## 循环播放背景音乐
+func _play_bgm() -> void:
+    self.music_bg.play()
