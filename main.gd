@@ -13,6 +13,22 @@ const TILE_CELL_PLACEABLE: Vector2i = Vector2i(4, 34)
 @export var enemy_count: int = 10
 @onready var rich_text_label: RichTextLabel = $RichTextLabel
 
+@export var original_coins: int = 100
+@onready var coins: int = original_coins:
+    set(value):
+        coins = value
+        game_form.update_coins_display(value)
+
+@export var max_hp: int = 100
+@onready var current_hp: int = max_hp:
+    set(value):
+        current_hp = clamp(value, 0, max_hp)
+        game_form.update_hp_display(current_hp, max_hp)
+        if current_hp <= 0:
+            _game_over()
+
+@export var _towers: Array[PackedScene]
+
 var _preview_tower: Tower:
     set(value):
         if _preview_tower and value:
@@ -26,14 +42,19 @@ signal game_start
 
 func _ready() -> void:
     randomize()
-    game_form.tower_released.connect(
-        func(P_TOWER: PackedScene) -> void:
-            _preview_tower = P_TOWER.instantiate()
+    game_form.original_tower_released.connect(
+        func(original_tower: OriginalTower) -> void:
+            if not original_tower.can_place_tower(coins): return
+            _preview_tower = original_tower.P_TOWER.instantiate()
             map.add_child(_preview_tower)
             _preview_tower.modulate = Color(1, 1, 1, 0.5)
+            _preview_tower.collision_shape_2d.shape.radius = _preview_tower.attack_range
     )
-    connect("game_start", Callable(self,"start"))
+    connect("game_start", Callable(self, "start"))
     start_countdown()
+    game_form.update_coins_display(coins)
+    game_form.update_hp_display(current_hp, max_hp)
+    game_form.initialize(_towers)
 
 func start_countdown():
     rich_text_label.visible = true
@@ -61,7 +82,7 @@ func _on_timer_begin_timeout():
 
 func start() -> void:
     timer_spawn_enemy.timeout.connect(
-        func()-> void:
+        func() -> void:
             _spawn_enemy()
     )
     music_bg.connect("finished", Callable(self, "_play_bgm"))
@@ -85,6 +106,7 @@ func preview_tower() -> void:
     var mouse_pos = get_global_mouse_position()
     var cell = map.local_to_map(map.to_local(mouse_pos))
     _preview_tower.global_position = map.to_global(map.map_to_local(cell))
+    _preview_tower.collision_shape_2d.shape.radius = _preview_tower.attack_range
     if can_place_tower(cell):
         _preview_tower.modulate = Color(1, 1, 1, 0.7)
         _preview_tower.show_range(true)
@@ -105,6 +127,7 @@ func place_tower() -> void:
     var cell: Vector2i = map.local_to_map(map.to_local(_preview_tower.global_position))
     if can_place_tower(cell):
         _preview_tower.audio_build.play()
+        coins -= _preview_tower.cost
         _preview_tower.initialize()
         _preview_tower.modulate = Color(1, 1, 1, 1)
         _preview_tower.show_range(false)
@@ -127,6 +150,8 @@ func _spawn_enemy() -> void:
         return
     var enemy_index: int = randi_range(0, enemies.size() - 1)
     var enemy = enemies[enemy_index].instantiate()
+    enemy.died.connect(_on_enemy_died.bind(enemy))
+    enemy.damaged.connect(_on_enemy_damaged.bind())
     path_2d.add_child(enemy)
     _loop()
 
@@ -134,6 +159,17 @@ func _loop() -> void:
     timer_spawn_enemy.wait_time = randf_range(3, 5)
     timer_spawn_enemy.start()
 
+## 游戏结束
+func _game_over() -> void:
+    print("Game Over")
+    get_tree().paused = true
+
 ## 循环播放背景音乐
 func _play_bgm() -> void:
     self.music_bg.play()
+
+func _on_enemy_died(enemy: Enemy) -> void:
+    coins += enemy.loot_coins
+
+func _on_enemy_damaged(damage: int) -> void:
+    current_hp -= damage

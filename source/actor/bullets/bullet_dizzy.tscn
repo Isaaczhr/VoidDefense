@@ -1,0 +1,11 @@
+[gd_scene load_steps=4 format=3 uid="uid://bopk4yr3bqanj"]
+
+[ext_resource type="PackedScene" uid="uid://dwwk6low5taqm" path="res://source/actor/bullet.tscn" id="1_rynyj"]
+[ext_resource type="Script" uid="uid://c13gii5n18q7o" path="res://source/actor/bullets/bullet_dizzy.gd" id="2_jy152"]
+[ext_resource type="Texture2D" uid="uid://dkcilnv8t8g88" path="res://assets/textures/bullet/bullet_dizzy.tres" id="2_mre64"]
+
+[node name="Bullet" instance=ExtResource("1_rynyj")]
+script = ExtResource("2_jy152")
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_mre64")

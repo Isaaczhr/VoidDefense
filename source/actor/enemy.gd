@@ -8,6 +8,7 @@ class_name Enemy
 
 @export var max_hp: float = 100
 @export var speed: float = 30
+var speed_times: float = 1
 
 @onready var current_hp: float = max_hp:
     set(value):
@@ -19,7 +20,7 @@ class_name Enemy
             progress_bar.hide()
         if current_hp <= 0:
             _die() 
-@export var attack: float = 10
+@export var attack: int = 10
 @export var loot_coins: int = 10
 
 signal damaged
@@ -32,17 +33,20 @@ func _ready() -> void:
     animated_sprite_enemy.play("walk")
 
 func _process(delta: float) -> void:
-    progress += speed * delta * randf_range(0.1, 1.0)
+    progress += speed * delta * randf_range(0.1, 1.0) * speed_times
     if progress_ratio >= 0.99:
         damage()
         queue_free()
         get_parent().remove_child(self)
 
 ## 受到伤害
-func hit(damage: float) -> void:
-    current_hp -= damage
+func hit(attack: float) -> void:
+    current_hp -= attack
     progress_bar.value = current_hp
     progress_bar.show()
+
+func dizzy(times: float) -> void:
+    speed_times = times
 
 ## 造成伤害
 func damage() -> void:

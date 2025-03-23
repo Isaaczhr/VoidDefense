@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://cbffsfue1sctr"]
+
+[ext_resource type="PackedScene" uid="uid://4l4dox7f087a" path="res://source/actor/tower.tscn" id="1_a7i56"]
+[ext_resource type="Script" uid="uid://d4ek71bdsnusj" path="res://source/actor/towers/tower_attack.gd" id="2_pl357"]
+
+[node name="Tower" instance=ExtResource("1_a7i56")]
+script = ExtResource("2_pl357")
+damage = 10.0

@@ -1,8 +1,21 @@
-[gd_scene load_steps=4 format=3 uid="uid://b7cm7oj1gdxtt"]
+[gd_scene load_steps=5 format=3 uid="uid://b7cm7oj1gdxtt"]
 
 [ext_resource type="FontFile" uid="uid://bj4xew07yitlm" path="res://assets/fonts/ark-pixel-12px-proportional-zh_cn.otf" id="1_5eoun"]
 [ext_resource type="Script" uid="uid://cqdlmvnxe03mn" path="res://source/interface/game_form.gd" id="1_hcqer"]
-[ext_resource type="PackedScene" uid="uid://btcnsahq08hvc" path="res://source/interface/original_tower.tscn" id="3_qa7p6"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hcqer"]
+bg_color = Color(0, 0, 0, 0.247059)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5eoun"]
+bg_color = Color(1, 0, 0, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
 
 [node name="GameForm" type="Control"]
 layout_mode = 3
@@ -24,28 +37,55 @@ grow_vertical = 2
 [node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 0
-theme_override_constants/margin_left = 8
-theme_override_constants/margin_top = 8
-theme_override_constants/margin_right = 8
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/MarginContainer"]
 layout_mode = 2
+size_flags_vertical = 0
 
-[node name="Label" type="Label" parent="VBoxContainer/MarginContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("1_5eoun")
-theme_override_font_sizes/font_size = 40
-text = "💰9999999"
-
-[node name="ProgressBar" type="ProgressBar" parent="VBoxContainer/MarginContainer/HBoxContainer"]
-custom_minimum_size = Vector2(200, 40)
+[node name="CoinLabel" type="Label" parent="VBoxContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 10
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_5eoun")
+theme_override_font_sizes/font_size = 35
+text = "💰9999999"
+
+[node name="HealthPoint" type="ProgressBar" parent="VBoxContainer/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(200, 40)
+layout_mode = 2
+size_flags_horizontal = 8
 size_flags_vertical = 4
 theme_override_fonts/font = ExtResource("1_5eoun")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/background = SubResource("StyleBoxFlat_hcqer")
+theme_override_styles/fill = SubResource("StyleBoxFlat_5eoun")
+value = 50.0
 show_percentage = false
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/MarginContainer/HBoxContainer/HealthPoint"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -79.0
+offset_top = -26.5
+offset_right = 79.0
+offset_bottom = 26.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_bottom = 1
+
+[node name="HealthLabel" type="Label" parent="VBoxContainer/MarginContainer/HBoxContainer/HealthPoint/MarginContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_5eoun")
+theme_override_font_sizes/font_size = 35
+text = " 50 / 100"
 
 [node name="ExitButton" type="Button" parent="VBoxContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
@@ -58,14 +98,10 @@ flat = true
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 10
-theme_override_constants/margin_left = 8
-theme_override_constants/margin_right = 8
-theme_override_constants/margin_bottom = 8
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/MarginContainer2"]
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 4
-
-[node name="OriginalTower" parent="VBoxContainer/MarginContainer2/HBoxContainer" instance=ExtResource("3_qa7p6")]
 layout_mode = 2

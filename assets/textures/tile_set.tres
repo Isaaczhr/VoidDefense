@@ -72,6 +72,7 @@ texture = ExtResource("1_k4420")
 8:36/0 = 0
 7:36/0 = 0
 6:36/0 = 0
+11:34/0 = 0
 
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_g170p"]
 resource_name = "Tower"

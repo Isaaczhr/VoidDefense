@@ -1,20 +1,43 @@
-[gd_scene load_steps=4 format=3 uid="uid://btcnsahq08hvc"]
+[gd_scene load_steps=5 format=3 uid="uid://btcnsahq08hvc"]
 
 [ext_resource type="PackedScene" uid="uid://4l4dox7f087a" path="res://source/actor/tower.tscn" id="1_0w7f1"]
 [ext_resource type="Script" uid="uid://d0yu6kapsu86n" path="res://source/interface/original_tower.gd" id="1_vm2ax"]
+[ext_resource type="FontFile" uid="uid://bj4xew07yitlm" path="res://assets/fonts/ark-pixel-12px-proportional-zh_cn.otf" id="3_civxf"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_272bh"]
 
 [node name="OriginalTower" type="MarginContainer"]
+custom_minimum_size = Vector2(64, 128)
+offset_right = 64.0
+offset_bottom = 128.0
 script = ExtResource("1_vm2ax")
 
 [node name="Panel" type="Panel" parent="."]
+visible = false
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_272bh")
+
+[node name="MarginContainer2" type="MarginContainer" parent="."]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+
+[node name="CostLabel" type="Label" parent="MarginContainer2"]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_civxf")
+theme_override_font_sizes/font_size = 35
+text = "10"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
 
 [node name="SubViewport" type="SubViewportContainer" parent="MarginContainer"]
 layout_mode = 2

@@ -2,51 +2,51 @@
 
 [ext_resource type="Texture2D" uid="uid://dac2ytuxwhqhj" path="res://assets/textures/tilesheet.png" id="1_odswe"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_qt1yd"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_odswe"]
 atlas = ExtResource("1_odswe")
 region = Rect2(0, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_kqisu"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_qt1yd"]
 atlas = ExtResource("1_odswe")
 region = Rect2(16, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_33tcr"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_kqisu"]
 atlas = ExtResource("1_odswe")
 region = Rect2(32, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_rgrde"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_33tcr"]
 atlas = ExtResource("1_odswe")
 region = Rect2(48, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_nts2u"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_rgrde"]
 atlas = ExtResource("1_odswe")
 region = Rect2(64, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_1cfrs"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_nts2u"]
 atlas = ExtResource("1_odswe")
 region = Rect2(80, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_b24o2"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_1cfrs"]
 atlas = ExtResource("1_odswe")
 region = Rect2(96, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_vd3at"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_b24o2"]
 atlas = ExtResource("1_odswe")
 region = Rect2(112, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_6pje0"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_vd3at"]
 atlas = ExtResource("1_odswe")
 region = Rect2(128, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_m6dtb"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_6pje0"]
 atlas = ExtResource("1_odswe")
 region = Rect2(144, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_4s13u"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_m6dtb"]
 atlas = ExtResource("1_odswe")
 region = Rect2(160, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_nacgn"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_4s13u"]
 atlas = ExtResource("1_odswe")
 region = Rect2(176, 0, 16, 16)
 
@@ -58,6 +58,9 @@ animations = [{
 "speed": 5.0
 }, {
 "frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_odswe")
+}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_qt1yd")
 }, {
@@ -90,9 +93,6 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_4s13u")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_nacgn")
 }],
 "loop": true,
 "name": &"standby",

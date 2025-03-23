@@ -7,14 +7,16 @@ class_name Tower
 @onready var audio_build: AudioStreamPlayer = $AudioBuild
 @onready var collision_shape_2d: CollisionShape2D = $Area2D/CollisionShape2D
 
-@export var P_BULLET: PackedScene = preload("res://source/actor/bullet.tscn")
+@export var P_BULLET: PackedScene
+@export var attack_range: float = 48
 @export var bullet_speed: float = 100
 @export var bullet_count: int = 1
 @onready var _current_bullet_count: int = bullet_count
 @export var cooldown: float = 0.5
 var _current_cooldown: float = 0
-@export var damage: float = 10
+
 var _enemies: Array = []
+@export var cost: int = 20
 
 var _show_range: bool = false
 
@@ -43,7 +45,7 @@ func _process(delta: float) -> void:
     if closest_to_end != null:
         var target_position = closest_to_end.global_position
         var target_angle = global_position.angle_to_point(target_position) + deg_to_rad(90)
-        animated_sprite_tower.rotation = lerp_angle(animated_sprite_tower.rotation, target_angle, 0.1)
+        animated_sprite_tower.rotation = lerp_angle(animated_sprite_tower.rotation, target_angle, 0.05)
 
     # 判断冷却时间, 攻击敌人
     if _current_cooldown > 0:
@@ -88,7 +90,6 @@ func _attack_enemy() -> void:
 ## 射击
 func _spawn_bullet(enemy) -> void:
     var bullet = P_BULLET.instantiate()
-    bullet.damage = damage
     add_child(bullet)
     bullet.initialize(enemy)
     _current_bullet_count -= 1
@@ -109,3 +110,7 @@ func _draw():
 func show_range(value: bool) -> void:
     _show_range = value
     queue_redraw()
+
+## 能否放置塔
+func can_place_tower(coin: int) -> bool:
+    return coin - cost >= 0

@@ -5,16 +5,8 @@ class_name Bullet
 
 ## 子弹速度
 @export var speed: float = 400
-var damage: float = 0
 ## 敌人节点引用
 var _target: Enemy = null
-
-func _ready() -> void:
-    area_2d.area_entered.connect(
-        func(area: Area2D) -> void:
-            if not area.owner is Enemy: return
-            attack(area.owner)
-    )
 
 func _process(delta: float) -> void:
     if not _target: 
@@ -30,8 +22,3 @@ func _process(delta: float) -> void:
 ## 初始化, 传入敌人
 func initialize(enemy: Enemy) -> void:
     _target = enemy
-
-## 造成伤害
-func attack(enemy: Enemy) -> void:
-    enemy.hit(damage)
-    queue_free()

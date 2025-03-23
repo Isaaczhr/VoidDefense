@@ -1,14 +1,35 @@
 extends Control
 
-@onready var original_tower: OriginalTower = $VBoxContainer/MarginContainer2/HBoxContainer/OriginalTower
+const ORIGINAL_TOWER = preload("res://source/interface/original_tower.tscn")
+# @onready var original_tower: OriginalTower = $VBoxContainer/MarginContainer2/HBoxContainer/OriginalTower
 @onready var exit_button: Button = $VBoxContainer/MarginContainer/HBoxContainer/ExitButton
+@onready var coin_label: Label = $VBoxContainer/MarginContainer/HBoxContainer/CoinLabel
+@onready var health_point: ProgressBar = $VBoxContainer/MarginContainer/HBoxContainer/HealthPoint
+@onready var health_label: Label = $VBoxContainer/MarginContainer/HBoxContainer/HealthPoint/MarginContainer/HealthLabel
+@onready var h_box_container: HBoxContainer = $VBoxContainer/MarginContainer2/HBoxContainer
 
-signal tower_released
+
+signal original_tower_released
 
 func _ready() -> void:
-    original_tower.released.connect(
-        func() -> void:
-            tower_released.emit(original_tower.P_TOWER)
-    )
+    pass
 
-    exit_button.connect("pressed", Callable(get_tree(), "quit"))
+func initialize(towers: Array[PackedScene]) -> void:
+    for P_TOWER: PackedScene in towers:
+        var original_tower: OriginalTower = ORIGINAL_TOWER.instantiate()
+        original_tower.P_TOWER = P_TOWER
+        h_box_container.add_child(original_tower)
+        original_tower.released.connect(
+            func() -> void:
+                original_tower_released.emit(original_tower)
+        )
+
+func update_coins_display(coins: int) -> void:
+    coin_label.text = "💰" + str(coins)
+    for original_tower in h_box_container.get_children():
+        original_tower.update_cost_display(coins)
+
+func update_hp_display(hp: int, max_hp: int) -> void:
+    health_point.value = hp
+    health_point.max_value = max_hp
+    health_label.text = "%3d / %-3d" % [hp, max_hp]
