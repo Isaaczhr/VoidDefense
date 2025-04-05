@@ -1,7 +1,12 @@
-[gd_scene load_steps=5 format=3 uid="uid://b7cm7oj1gdxtt"]
+[gd_scene load_steps=8 format=3 uid="uid://b7cm7oj1gdxtt"]
 
 [ext_resource type="FontFile" uid="uid://bj4xew07yitlm" path="res://assets/fonts/ark-pixel-12px-proportional-zh_cn.otf" id="1_5eoun"]
 [ext_resource type="Script" uid="uid://cqdlmvnxe03mn" path="res://source/interface/game_form.gd" id="1_hcqer"]
+[ext_resource type="Texture2D" uid="uid://dac2ytuxwhqhj" path="res://assets/textures/tilesheet.png" id="3_5eoun"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5eoun"]
+atlas = ExtResource("3_5eoun")
+region = Rect2(96, 688, 16, 16)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hcqer"]
 bg_color = Color(0, 0, 0, 0.247059)
@@ -16,6 +21,10 @@ corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hcqer"]
+atlas = ExtResource("3_5eoun")
+region = Rect2(192, 688, 16, 16)
 
 [node name="GameForm" type="Control"]
 layout_mode = 3
@@ -45,13 +54,22 @@ theme_override_constants/margin_right = 4
 layout_mode = 2
 size_flags_vertical = 0
 
-[node name="CoinLabel" type="Label" parent="VBoxContainer/MarginContainer/HBoxContainer"]
+[node name="CoinLabel" type="RichTextLabel" parent="VBoxContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 10
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("1_5eoun")
-theme_override_font_sizes/font_size = 35
-text = "💰9999999"
+size_flags_horizontal = 3
+theme_override_colors/default_color = Color(0.984314, 0.94902, 0.211765, 1)
+theme_override_fonts/normal_font = ExtResource("1_5eoun")
+theme_override_font_sizes/normal_font_size = 35
+bbcode_enabled = true
+text = "[wave]9999999[/wave]"
+fit_content = true
+horizontal_alignment = 2
+
+[node name="Sprite2D" type="TextureButton" parent="VBoxContainer/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_5eoun")
+stretch_mode = 5
 
 [node name="HealthPoint" type="ProgressBar" parent="VBoxContainer/MarginContainer/HBoxContainer"]
 custom_minimum_size = Vector2(200, 40)
@@ -80,19 +98,19 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_bottom = 1
 
-[node name="HealthLabel" type="Label" parent="VBoxContainer/MarginContainer/HBoxContainer/HealthPoint/MarginContainer"]
+[node name="HealthLabel" type="RichTextLabel" parent="VBoxContainer/MarginContainer/HBoxContainer/HealthPoint/MarginContainer"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("1_5eoun")
-theme_override_font_sizes/font_size = 35
+theme_override_fonts/normal_font = ExtResource("1_5eoun")
+theme_override_font_sizes/normal_font_size = 35
+bbcode_enabled = true
 text = " 50 / 100"
+fit_content = true
 
-[node name="ExitButton" type="Button" parent="VBoxContainer/MarginContainer/HBoxContainer"]
+[node name="ExitButton" type="TextureButton" parent="VBoxContainer/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
-theme_override_fonts/font = ExtResource("1_5eoun")
-theme_override_font_sizes/font_size = 40
-text = "🚪"
-flat = true
+texture_normal = SubResource("AtlasTexture_hcqer")
+stretch_mode = 5
 
 [node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer"]
 layout_mode = 2

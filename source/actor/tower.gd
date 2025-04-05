@@ -6,6 +6,7 @@ class_name Tower
 @onready var audio_shoot: AudioStreamPlayer = $AudioShoot
 @onready var audio_build: AudioStreamPlayer = $AudioBuild
 @onready var collision_shape_2d: CollisionShape2D = $Area2D/CollisionShape2D
+@onready var touch_area: Area2D = $TouchArea
 
 @export var P_BULLET: PackedScene
 @export var attack_range: float = 48
@@ -21,7 +22,20 @@ var _enemies: Array = []
 var _show_range: bool = false
 
 func _ready() -> void:
-    pass
+    touch_area.mouse_entered.connect(
+        func() -> void:
+            _show_range = true
+            queue_redraw()
+            var tween = create_tween()
+            tween.tween_property(animated_sprite_tower, "scale", Vector2(1.2, 1.2), 0.1).set_ease(Tween.EASE_OUT)
+    )
+    touch_area.mouse_exited.connect(
+        func() -> void:
+            _show_range = false
+            queue_redraw()
+            var tween = create_tween()
+            tween.tween_property(animated_sprite_tower, "scale", Vector2(1, 1), 0.1).set_ease(Tween.EASE_IN)
+    )
 
 func initialize() -> void:
     animated_sprite_tower.play("standby")
@@ -100,6 +114,7 @@ func _spawn_bullet(enemy) -> void:
 func _draw():
     if _show_range and collision_shape_2d and collision_shape_2d.shape:
         var shape = collision_shape_2d.shape
+        shape.radius = attack_range
         var fill_color = Color(0, 1, 1, 0.3)
         var border_color = Color(0, 1, 1, 0.5)
         var border_width = 1

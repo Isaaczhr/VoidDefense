@@ -1,16 +1,17 @@
 extends Tower
+@export var damage: float = 0
+@export var dizzy_time_min: float = 1.5
+@export var dizzy_time_max: float = 2.5
 
-@export var enemy_speed_times: float = 0.5
-@export var damage: float = 5
-@export var dizzy_range: float = 96
 func _ready() -> void:
+    super._ready()
     P_BULLET = preload("res://source/actor/bullets/bullet_dizzy.tscn")
 
 func _spawn_bullet(enemy) -> void:
     var bullet = P_BULLET.instantiate()
-    bullet.enemy_speed_times = enemy_speed_times
     bullet.damage = damage
-    bullet.dizzy_range = dizzy_range
+    bullet.dizzy_time_min = dizzy_time_min
+    bullet.dizzy_time_max = dizzy_time_max
     add_child(bullet)
     bullet.initialize(enemy)
     _current_bullet_count -= 1

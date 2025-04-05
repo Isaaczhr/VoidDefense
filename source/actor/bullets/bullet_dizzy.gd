@@ -1,8 +1,8 @@
 extends Bullet
 
-var enemy_speed_times: float = 0.5
-var damage: float = 5
-var dizzy_range: float = 96
+@export var damage: float = 0
+@export var dizzy_time_min: float = 1.5
+@export var dizzy_time_max: float = 2.5
 
 func _ready() -> void:
     area_2d.area_entered.connect(
@@ -13,10 +13,8 @@ func _ready() -> void:
 
 ## 造成伤害
 func attack(enemy: Enemy) -> void:
-    for e in enemy.get_parent().get_children():
-        if not e is Enemy: continue
-        if e.global_position.distance_to(enemy.global_position) <= dizzy_range:
-            e.dizzy(enemy_speed_times)
-    # 给予击中的敌人伤害
     enemy.hit(damage)
+    var dizzy_time = randf_range(dizzy_time_min, dizzy_time_max)
+    enemy.dizzy(dizzy_time)
+    ShakeManager.start_shake()
     queue_free()

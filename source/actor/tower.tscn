@@ -1,11 +1,14 @@
-[gd_scene load_steps=5 format=3 uid="uid://4l4dox7f087a"]
+[gd_scene load_steps=6 format=3 uid="uid://4l4dox7f087a"]
 
 [ext_resource type="Script" uid="uid://fgdu6fq2fori" path="res://source/actor/tower.gd" id="1_wq0lu"]
-[ext_resource type="SpriteFrames" uid="uid://781vjtvucxwr" path="res://assets/textures/tower/frames/tower_01_frames.tres" id="2_23b6p"]
+[ext_resource type="SpriteFrames" uid="uid://781vjtvucxwr" path="res://assets/textures/tower/frames/tower_01_frame.tres" id="2_23b6p"]
 [ext_resource type="AudioStream" uid="uid://hx6iyej3i7vi" path="res://assets/sound/build.wav" id="3_23b6p"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_wq0lu"]
 radius = 48.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_23b6p"]
+size = Vector2(16, 16)
 
 [node name="Tower" type="Node2D"]
 script = ExtResource("1_wq0lu")
@@ -20,6 +23,11 @@ collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_wq0lu")
+
+[node name="TouchArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TouchArea"]
+shape = SubResource("RectangleShape2D_23b6p")
 
 [node name="AudioShoot" type="AudioStreamPlayer" parent="."]
 

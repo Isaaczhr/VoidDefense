@@ -4,4 +4,4 @@
 
 [resource]
 atlas = ExtResource("1_xsovk")
-region = Rect2(288, 512, 16, 16)
+region = Rect2(352, 512, 16, 16)

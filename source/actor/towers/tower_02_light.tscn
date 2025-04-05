@@ -1,16 +1,17 @@
 [gd_scene load_steps=5 format=3 uid="uid://it1ucdx0ltsp"]
 
 [ext_resource type="PackedScene" uid="uid://4l4dox7f087a" path="res://source/actor/tower.tscn" id="1_f11ia"]
-[ext_resource type="Script" uid="uid://dqw8716fpfvca" path="res://source/actor/towers/tower_dizzy.gd" id="2_efdhk"]
-[ext_resource type="SpriteFrames" uid="uid://bmpjqxg11ae6j" path="res://assets/textures/tower/frames/tower_02_frames.tres" id="2_glkj7"]
-[ext_resource type="PackedScene" uid="uid://bopk4yr3bqanj" path="res://source/actor/bullets/bullet_dizzy.tscn" id="3_efdhk"]
+[ext_resource type="Script" uid="uid://dqw8716fpfvca" path="res://source/actor/towers/tower_decelerate.gd" id="2_efdhk"]
+[ext_resource type="SpriteFrames" uid="uid://bmpjqxg11ae6j" path="res://assets/textures/tower/frames/tower_02_frame.tres" id="2_glkj7"]
+[ext_resource type="PackedScene" uid="uid://bopk4yr3bqanj" path="res://source/actor/bullets/bullet_decelerate.tscn" id="3_efdhk"]
 
 [node name="Tower" instance=ExtResource("1_f11ia")]
 script = ExtResource("2_efdhk")
 enemy_speed_times = 0.5
 damage = 5.0
-dizzy_range = 96.0
+decelerate_range = 96.0
 P_BULLET = ExtResource("3_efdhk")
+cost = 30
 
 [node name="AnimatedSpriteTower" parent="." index="0"]
 sprite_frames = ExtResource("2_glkj7")

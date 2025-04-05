@@ -12,4 +12,5 @@ func _ready() -> void:
 ## 造成伤害
 func attack(enemy: Enemy) -> void:
     enemy.hit(damage)
+    ShakeManager.start_shake()
     queue_free()
