@@ -161,7 +161,7 @@ func _loop() -> void:
 
 ## 游戏结束
 func _game_over() -> void:
-    print("Game Over")
+    # print("Game Over")
     get_tree().paused = true
 
 ## 循环播放背景音乐

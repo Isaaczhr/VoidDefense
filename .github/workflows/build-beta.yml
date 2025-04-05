@@ -1,0 +1,156 @@
+name: Build and Release Beta
+description: |
+  The workflow is triggered by a push to a tag that starts with "beta-".
+permissions:
+  contents: write
+
+on:
+  push:
+    tags:
+      - 'beta-*'
+
+jobs:
+  build:
+    name: Build Game
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        platform: [windows]
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          lfs: true
+          fetch-depth: 0
+      
+      - name: Install Godot
+        uses: chickensoft-games/setup-godot@v1
+        with:
+          version: 4.4.1
+          use-dotnet: false
+          include-templates: true
+      
+      - name: Make .godot directory
+        run: mkdir -p .godot/imported
+      
+      - name: import Godot project
+        run: |
+          godot --headless --editor --quit
+          sleep 5
+          ls -la .godot/imported
+      
+      - name: Check Godot version
+        run: |
+          godot --version
+          godot --help
+      
+      - name: Make build directory
+        run: mkdir -p build/windows
+      
+      - name: Build Windows version
+        run: |
+          godot --headless --verbose --export-release "windows" ./build/windows/VoidDefense.exe || \
+
+          godot --headless --export-debug "windows" ./build/windows/VoidDefense.exe
+          
+          ls -la ./build/windows/
+      
+      - name: Check build
+        run: |
+          mkdir -p ./build/windows/
+          touch ./build/windows/README.txt
+          echo "Beta Build" > ./build/windows/README.txt
+      
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: VoidDefense-windows
+          path: ${{ github.workspace }}/build/windows
+  
+  release:
+    name: Release Beta
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: VoidDefense-windows
+          path: ./builds/VoidDefense-windows
+      
+      - name: Create zip file
+        run: |
+          cd ./builds
+          zip -r ../VoidDefense-windows.zip VoidDefense-windows/
+      
+      - name: Check if release exists
+        id: check_release
+        run: |
+          TAG_NAME="${{ github.ref_name }}"
+          RELEASE_DATA=$(curl -s \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            "https://api.github.com/repos/${{ github.repository }}/releases/tags/${TAG_NAME}")
+          
+          if [[ $(echo "$RELEASE_DATA" | grep -c '"id":') -gt 0 ]]; then
+            echo "Release exists!"
+            RELEASE_ID=$(echo "$RELEASE_DATA" | jq -r .id)
+            echo "release_exists=true" >> $GITHUB_OUTPUT
+            echo "release_id=$RELEASE_ID" >> $GITHUB_OUTPUT
+          else
+            echo "Release does not exist."
+            echo "release_exists=false" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Update existing release
+        if: steps.check_release.outputs.release_exists == 'true'
+        run: |
+          RELEASE_ID=${{ steps.check_release.outputs.release_id }}
+          ASSET_NAME="VoidDefense-windows.zip"
+          
+          # Check if the asset already exists
+          ASSET_ID=$(curl -s \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            "https://api.github.com/repos/${{ github.repository }}/releases/${RELEASE_ID}/assets" | \
+            jq -r ".[] | select(.name==\"${ASSET_NAME}\") | .id")
+          
+          # If the asset exists, delete it
+          if [[ ! -z "$ASSET_ID" ]]; then
+            echo "Asset exists, deleting it first..."
+            curl -X DELETE \
+              -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+              "https://api.github.com/repos/${{ github.repository }}/releases/assets/${ASSET_ID}"
+          fi
+          
+          # Upload the new asset
+          echo "Uploading new asset to existing release..."
+          curl -X POST \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Content-Type: application/octet-stream" \
+            --data-binary @./VoidDefense-windows.zip \
+            "https://uploads.github.com/repos/${{ github.repository }}/releases/${RELEASE_ID}/assets?name=${ASSET_NAME}"
+      
+      - name: Create new release
+        if: steps.check_release.outputs.release_exists != 'true'
+        uses: softprops/action-gh-release@v1
+        with:
+          name: ${{ github.ref_name }}
+          draft: false
+          prerelease: true
+          files: |
+            ./VoidDefense-windows.zip
+          body: |
+            # VoidDefense Beta Version: ${{ github.ref_name }}
+            
+            This is a beta release of VoidDefense. Please report any bugs or issues you encounter.
+            
+            ## Download
+            - [Windows Version](https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/VoidDefense-windows.zip)
+            
+            ## Build Information
+            - Time: ${{ github.event.repository.updated_at }}
+            - Commit: ${{ github.sha }}
+            - Version: ${{ github.ref_name }}
+            - Branch: ${{ github.ref }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
